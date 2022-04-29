@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Earthquakes in Japan</title>
+    <title>US COVID cases</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
@@ -76,7 +76,8 @@
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/light-v10',
             zoom: 3.5, // starting zoom
-            center: [-95, 39] // starting center
+            center: [-95, 39], // starting center
+            projection:'albers'
         });
 
         const grades = [30000, 80000, 180000],
@@ -95,7 +96,7 @@
             });
 
             map.addLayer({
-                    'id': 'covid-point',
+                    'id': 'covid-counts_point',
                     'type': 'circle',
                     'source': 'covid_counts',
                     'paint': {
