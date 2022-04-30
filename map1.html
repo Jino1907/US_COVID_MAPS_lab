@@ -87,7 +87,7 @@
 <body>
     <div id="map"></div>
     <div class='map-overlay' id='features'>
-        <h2>US population density</h2>
+        <h2>US COVID Rate map</h2>
         <div id='text-escription'>
             <p>Hover over a state!</p>
         </div>
@@ -101,7 +101,8 @@
             container: 'map', // container ID
             style: 'mapbox://styles/mapbox/light-v10', // style URL
             zoom: 3.5, // starting zoom
-            center: [-95, 39] // starting center      
+            center: [-98, 39], // starting center   
+            projection: 'albers'
         });
 
         // load data and add as layer
@@ -123,18 +124,20 @@
                         'fill-color': [
                             'step',
                             ['get', 'rates'],
-                            '#FFEDA0',   // stop_output_0
-                            10,          // stop_input_0
-                            '#FED976',   // stop_output_1
-                            20,          // stop_input_1
-                            '#FEB24C',   // stop_output_2
-                            50,          // stop_input_2
-                            '#FD8D3C',   // stop_output_3
-                            100,         // stop_input_3
-                            '#FC4E2A',   // stop_output_4
-                            200,         // stop_input_4
-                            '#E31A1C',   // stop_output_5
-                            500,         // stop_input_5
+                            '#FFEDA0', // stop_output_0
+                            10, // stop_input_0
+                            '#FED976', // stop_output_1
+                            20, // stop_input_1
+                            '#FEB24C', // stop_output_2
+                            50, // stop_input_2
+                            '#FD8D3C', // stop_output_3
+                            100, // stop_input_3
+                            '#FC4E2A', // stop_output_4
+                            200, // stop_input_4
+                            '#E31A1C', // stop_output_5
+                            500, // stop_input_5
+                            '#BD0026', // stop_output_6
+                            1000, // stop_input_6
                         ],
                         'fill-outline-color': '#BBBBBB',
                         'fill-opacity': 0.7,
@@ -178,17 +181,19 @@
                 });
             });
 
-            map.on('mousemove', ({point}) => {
+            map.on('mousemove', ({
+                point
+            }) => {
                 const state = map.queryRenderedFeatures(point, {
                     layers: ['covid-rate-layer']
                 });
                 document.getElementById('text-escription').innerHTML = state.length ?
-                    `<h3>${state[0].properties.county}</h3><p><strong><em>${state[0].properties.rates}</strong> rates per thousand </em></p>` :
+                    `<h3>${state[0].properties.county}</h3><p><strong><em>${state[0].properties.rates}</strong> per thousand </em></p>` :
                     `<p>Hover over a state!</p>`;
             });
         }
 
-        geojsonFetch();
+        geojsonFetch(); 
     </script>
 
 </body>
