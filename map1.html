@@ -9,6 +9,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
     <style>
         h2,
+
         h3 {
             margin: 10px;
             font-size: 18px;
@@ -53,18 +54,30 @@
             border-radius: 3px;
         }
 
+        #subtitle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 40px;
+            margin-left: 190px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 10pt;
+            color: black
+        }
+
+
         #features {
             top: 0;
-            height: 100px;
+            height: 120px;
             margin-top: 20px;
-            width: 250px;
+            width: 450px;
         }
 
         #legend {
             padding: 10px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             line-height: 18px;
-            height: 210px;
+            height: 240px;
             margin-bottom: 40px;
             width: 150px;
         }
@@ -88,6 +101,9 @@
     <div id="map"></div>
     <div class='map-overlay' id='features'>
         <h2>US COVID Rate map</h2>
+        <div id="subtitle">
+            This map illustrates rate of covid cases <br> per thousand people in the United States 2020.
+        </div>
         <div id='text-escription'>
             <p>Hover over a state!</p>
         </div>
@@ -138,6 +154,7 @@
                             500, // stop_input_5
                             '#BD0026', // stop_output_6
                             1000, // stop_input_6
+                            "#800026" // stop_output_7
                         ],
                         'fill-outline-color': '#BBBBBB',
                         'fill-opacity': 0.7,
@@ -163,8 +180,11 @@
 
                 // create legend
                 const legend = document.getElementById('legend');
-                legend.innerHTML = "<b>COIVD rates by county<br>(/per thousand people.)</b><br><br>";
 
+                const source =
+                    '<p style="text-align: right; font-size:10pt">Source: <a href="https://www.nytimes.com/">NYTimes</a></p>';
+
+                legend.innerHTML = "<b>COIVD rates by county<br>(/per thousand people.)</b><br><br>";
 
                 layers.forEach((layer, i) => {
                     const color = colors[i];
@@ -179,6 +199,8 @@
                     item.appendChild(value);
                     legend.appendChild(item);
                 });
+                
+                legend.innerHTML += source; 
             });
 
             map.on('mousemove', ({
@@ -193,7 +215,7 @@
             });
         }
 
-        geojsonFetch(); 
+        geojsonFetch();
     </script>
 
 </body>
